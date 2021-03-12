@@ -33,6 +33,6 @@ Steps to test:
 12. Bring the old master up (or) wait for it to wake up. Now, this is a new slave. Now, both redis instances shoud in sync with the data. 
 
 To delete all the setup, issue following commands in git bash or command prompt.
-docker-compose down
-docker rmi $(docker images -q) --force
+1. docker-compose down
+2. docker rmi $(docker images -q) --force
 
