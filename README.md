@@ -31,3 +31,8 @@ Steps to test:
 10. Now, observe the sentinels and verify they elect the current slave (6380) as master. 
 11. Again issue commands on sentinels as above to see the current master.
 12. Bring the old master up (or) wait for it to wake up. Now, this is a new slave. Now, both redis instances shoud in sync with the data. 
+
+To delete all the setup, issue following commands in git bash or command prompt.
+1. docker-compose down
+2. docker rmi $(docker images -q) --force
+
