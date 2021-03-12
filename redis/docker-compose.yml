@@ -1,0 +1,61 @@
+version: "3.8"
+services:         
+           
+    redis-master:
+        image: redis:6.2.1-alpine
+        container_name: redis-master
+        ports: 
+            - "6379:6379"
+        command: redis-server --port 6379
+        networks:
+            - redis-net
+          
+    redis-slave:
+        image: redis:6.2.1-alpine
+        container_name: redis-slave
+        ports: 
+            - "6380:6380"
+        command: redis-server --slaveof 192.168.1.67 6379 --slave-announce-ip "192.168.1.67"  --port 6380 --client-output-buffer-limit replica 256mb 64mb 60
+        networks:
+            - redis-net
+            
+    # Instance 1
+    redis-sentinel:
+        container_name: redis-sentinel-1
+        ports: 
+            - "26379:26379"
+        build:
+          context: ./sentinel
+        networks:
+            - redis-net
+        environment:
+            - HOST_IP="192.168.1.67"
+            
+    # Instance 2
+    redis-sentinel2:
+        container_name: redis-sentinel-2
+        ports: 
+            - "26380:26380"
+        build:
+          context: ./sentinel
+        networks:
+            - redis-net
+        environment:
+            - HOST_IP="192.168.1.67"
+            
+    # Instance 3
+    redis-sentinel3:
+        container_name: redis-sentinel-3
+        ports: 
+            - "26381:26381"
+        build:
+          context: ./sentinel
+        networks:
+            - redis-net
+        environment:
+            - HOST_IP="192.168.1.67"
+            
+networks: 
+    redis-net:
+         driver: bridge
+         name: redis-net
