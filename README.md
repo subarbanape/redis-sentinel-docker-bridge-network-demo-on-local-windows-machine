@@ -17,9 +17,9 @@ Steps to test:
 1. Open command prompt and cd to the redis folder.
 2. Issue the command 'docker-compose up' to setup.
 3. Observe that everything successfully created in your docker desktop window.
-4. Now, open the CLI of master. Login to the redis container 'redis-cli -h 192.168.1.67 -p 6379' (replace the ip with your machine ip). Then, issue the command 'redis-cli info | grep ^role'. It should output master.
-5. Repeat the above step for slave container. The output should say slave.
-6. Now, open the CLI of one of the sentinels. And issue the command 'redis-cli -p 26379'. Then run all these commands and verify the redis instances are properly identified as master and slave. 
+4. Now, open the CLI. Login to the redis container 'redis-cli -h 192.168.1.67 -p 6379' (replace the ip with your machine ip). Then, issue the command 'info'. Observe the role value in the response. It should say master.
+5. Repeat the above step for slave container.  It should say slave.
+6. Now, open the CLI of one of the sentinels. And issue the command 'redis-cli -h 192.168.1.67 -p 26379'. Then run all these commands and verify the redis instances are properly identified as master and slave. 
   (a) 'sentinel master redismaster' - should display master redis instance information. Observe that the flag should display master in the output. The port should be 6379.
   (b) 'SENTINEL replicas redismaster' - should display slave redis instance. Observe that the port should be 6380. The flag should display slave.
   (c) 'SENTINEL sentinels redismaster' - should display all the sentinels available.
