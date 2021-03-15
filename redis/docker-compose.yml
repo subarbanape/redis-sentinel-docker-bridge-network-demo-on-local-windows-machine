@@ -15,7 +15,7 @@ services:
         container_name: redis-slave
         ports: 
             - "6380:6380"
-        command: redis-server --slaveof 192.168.1.67 6379 --slave-announce-ip "192.168.1.67"  --port 6380 --client-output-buffer-limit replica 256mb 64mb 60
+        command: redis-server --slaveof 192.168.1.67 6379 --slave-announce-ip "192.168.1.67"  --port 6380
         networks:
             - redis-net
             
@@ -28,32 +28,26 @@ services:
           context: ./sentinel
         networks:
             - redis-net
-        environment:
-            - HOST_IP="192.168.1.67"
-            
+                   
     # Instance 2
     redis-sentinel2:
         container_name: redis-sentinel-2
         ports: 
-            - "26380:26380"
+            - "26380:26379"
         build:
           context: ./sentinel
         networks:
             - redis-net
-        environment:
-            - HOST_IP="192.168.1.67"
             
     # Instance 3
     redis-sentinel3:
         container_name: redis-sentinel-3
         ports: 
-            - "26381:26381"
+            - "26381:26379"
         build:
           context: ./sentinel
         networks:
             - redis-net
-        environment:
-            - HOST_IP="192.168.1.67"
             
 networks: 
     redis-net:
